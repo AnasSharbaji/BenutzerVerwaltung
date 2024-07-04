@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+	<startup>
+		<supportedRuntime version="v4.0" sku=".NETFramework,Version=v4.7.2" />
+		<!-- Adjust the .NETFramework version as per your project -->
+	</startup>
+	<connectionStrings>
+		<!-- Your connection strings go here -->
+		<add name="MyDatabaseConnectionString" connectionString="Data Source=.\\ASHARBAJI-PC\MSSQLSERVER2;Initial Catalog=User Management;Integrated Security=True" providerName="System.Data.SqlClient" />
+		
+	</connectionStrings>
+</configuration>

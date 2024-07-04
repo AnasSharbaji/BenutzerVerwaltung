@@ -1,0 +1,166 @@
+﻿<Window x:Class="BenutzerVerwaltung.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BenutzerVerwaltung"
+        mc:Ignorable="d"
+        Title ="User Management System" Height="700" Width="800">
+    
+    <!--Globel Styles-->
+        <Window.Resources>
+        <Style TargetType="GroupBox">
+            <Setter Property="Margin" Value="10"/>
+            <Setter Property="Padding" Value="0 0 0 10"/>
+            <Setter Property="BorderBrush" Value="Black"/>
+            <Setter Property="BorderThickness" Value="1"/>
+        </Style>
+        <Style TargetType="Label">
+            <Setter Property="Width" Value="100"/>
+            <Setter Property="HorizontalAlignment" Value="Right"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+        <Style TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}">
+            <Setter Property="Margin" Value="5 0 0 10"/>
+        </Style>
+    </Window.Resources>
+
+    <StackPanel Margin="10">
+        <!--User Section-->
+        <GroupBox Header="User Information" Margin="0 0 0 10">
+            <Grid Margin="10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <Label Grid.Row="0" Grid.Column="0" Content="First Name" />
+                <TextBox Grid.Row="0" Grid.Column="1" x:Name="txtFirstName" Margin="150 0 150 0"/>
+
+                <Label Grid.Row="1" Grid.Column="0" Content="Last Name" />
+                <TextBox Grid.Row="1" Grid.Column="1" x:Name="txtLastName" Margin="150 0 150 0"/>
+
+                <Label Grid.Row="2" Grid.Column="0" Content="User ID"/>
+                <TextBox Grid.Row="2" Grid.Column="1" x:Name="txtUserId" Margin="150 0 150 0"/>
+
+                <Label Grid.Row="3" Grid.Column="0" Content="Email"/>
+                <TextBox Grid.Row="3" Grid.Column="1" x:Name="txtUserEmail" Margin="150 0 150 0"/>
+
+                <Label Grid.Row="4" Grid.Column="0" Content="Address" />
+                <TextBox Grid.Row="4" Grid.Column="1" x:Name="txtUserAddress" Margin="150 0 150 0"/>
+
+                <Label Grid.Row="5" Grid.Column="0" Content="Password"/>
+                <PasswordBox Grid.Row="5" Grid.Column="1" x:Name="txtUserPassword" Margin="150 0 150 0"/>
+
+                <!--Role Section-->
+                <Label Grid.Row="6" Grid.Column="0" Content="Role"/>
+                <ComboBox Grid.Row="6" Grid.Column="1" x:Name="cmbUserRole" Width="350" Margin="10">
+                    <ComboBoxItem Content="Admin"/>
+                    <ComboBoxItem Content="Ceo"/>
+                    <ComboBoxItem Content="Co-Ceo"/>
+                    <ComboBoxItem Content="HR"/>
+                    <ComboBoxItem Content="Team-Manager"/>
+                    <ComboBoxItem Content="Co-Worker"/>
+                    <ComboBoxItem Content= "Guest"/>
+                </ComboBox>
+
+                <!--Groups section-->
+                <Label Grid.Row="7" Grid.Column="0" Content="Choose a Group"/>
+                <StackPanel Grid.Row="7" Grid.Column="1" Margin="0 5 0 10">
+                    <CheckBox Content="Management" x:Name="chkManagement" Margin="0 0 0 5"/>
+                    <CheckBox Content="Production" x:Name="chkProduction" Margin="0 0 0 5"/>
+                    <CheckBox Content="Support" x:Name="chkSupport" Margin="0 0 0 5"/>
+                    <CheckBox Content="Visitation" x:Name="chkVisit" Margin="0 0 0 5"/>
+                </StackPanel>
+
+                <!--Permissions section-->
+                <Label Grid.Row="8" Grid.Column="0" Content="Permissions" />
+                <StackPanel Grid.Row="8" Grid.Column="1" Margin="0 5 0 10">
+                    <CheckBox Content="Full Access" x:Name="chkfullAccess" Margin="0 0 0 5"/>
+                    <CheckBox Content="Full Edit" x:Name="chkFullEdit" Margin="0 0 0 5"/>
+                    <CheckBox Content="Limited Access" x:Name="chkLimitedAccess" Margin="0 0 0 5"/>
+                    <CheckBox Content="Limited Edit" x:Name="chkLimitedEdit" Margin="0 0 0 5"/>
+                    <CheckBox Content="Read Only" x:Name="chkReadOnly" Margin="0 0 0 5"/>
+                    <CheckBox Content="Write Only" x:Name="chkWriteOnly" Margin="0 0 0 5"/>
+                </StackPanel>
+
+                <!--AddUser Button-->
+                <Button Grid.Row="9" Grid.Column="1" Content="Add User" Click="AddUserClick" Width="100" HorizontalAlignment="Left" Margin="0 10 0 0"/>
+
+                <!--ListView Section-->
+                <ListView Grid.Row="10" Grid.Column="0" Grid.ColumnSpan="2" x:Name="lvUsers" Margin="0,10,0,0" HorizontalAlignment="Stretch" ItemsSource="{Binding Users}">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="User Name" Width="150" DisplayMemberBinding="{Binding FullName}" />
+                            <GridViewColumn Header="User ID" Width="150" DisplayMemberBinding="{Binding Id}" />
+                            <GridViewColumn Header="Email" Width="150" DisplayMemberBinding="{Binding Email}" />
+
+                            <GridViewColumn Header="Role" Width="150">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <ItemsControl ItemsSource="{Binding Roles}">
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Text="{Binding RoleName}" />
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                        </ItemsControl>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+
+                            <GridViewColumn Header="Groups" Width="150">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <ItemsControl ItemsSource="{Binding Groups}">
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Text="{Binding GroupName}" />
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                        </ItemsControl>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+
+                            <GridViewColumn Header="Permissions" Width="200">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <ItemsControl ItemsSource="{Binding Roles}">
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate>
+                                                    <ItemsControl ItemsSource="{Binding Permissions}">
+                                                        <ItemsControl.ItemTemplate>
+                                                            <DataTemplate>
+                                                                <TextBlock Text="{Binding PermissionName}" />
+                                                            </DataTemplate>
+                                                        </ItemsControl.ItemTemplate>
+                                                    </ItemsControl>
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                        </ItemsControl>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </Grid>
+        </GroupBox>
+    </StackPanel>
+    
+</Window>
